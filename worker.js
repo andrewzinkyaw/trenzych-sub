@@ -5,10 +5,14 @@ export default {
     const res = await fetch(url);
     const text = await res.text();
 
-    return new Response(text, {
+    const encoded = btoa(unescape(encodeURIComponent(text)));
+
+    return new Response(encoded, {
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
-      },
+        "Profile-Title": "TRENZYCH VPN",
+        "Subscription-Userinfo": "upload=0; download=0; total=0; expire=0"
+      }
     });
-  },
-};
+  }
+}
