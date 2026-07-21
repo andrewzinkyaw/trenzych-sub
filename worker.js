@@ -79,7 +79,7 @@ export default {
       return new Response(encoded, {
         headers: {
           "Content-Type": "text/plain; charset=utf-8",
-          "Profile-Title": "TRENZYCH VPN",
+          "Profile-Title": "TRENZYCH VPN - Update Subscription ➡️",
           "Profile-Update-Interval": "6",
           "Subscription-Userinfo": "upload=0; download=0; total=0; expire=0",
           "Cache-Control": "public, max-age=300",
