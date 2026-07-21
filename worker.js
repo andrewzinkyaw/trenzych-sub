@@ -2,42 +2,41 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // URL: /free/token
-    const parts = url.pathname.split("/").filter(Boolean);
-
-    const route = parts[0] || "free";
-    const token = parts[1] || "";
-
     const routes = {
-      free: "free.txt",
-      premium: "premium.txt",
-      sg: "sg.txt",
-      jp: "jp.txt",
-      us: "us.txt",
+      "/": "free.txt",
+      "/free": "free.txt",
+      "/premium": "premium.txt",
+      "/sg": "sg.txt",
+      "/jp": "jp.txt",
+      "/us": "us.txt",
     };
 
-    const tokens = {
-      free: env.FREE_TOKEN,
-      premium: env.PREMIUM_TOKEN,
-      sg: env.SG_TOKEN,
-      jp: env.JP_TOKEN,
-      us: env.US_TOKEN,
+    const file = routes[url.pathname];
+
+    const TOKENS = {
+      "/": env.FREE_TOKEN,
+      "/free": env.FREE_TOKEN,
+      "/premium": env.PREMIUM_TOKEN,
+      "/sg": env.SG_TOKEN,
+      "/jp": env.JP_TOKEN,
+      "/us": env.US_TOKEN,
     };
 
-    const file = routes[route];
+    const expectedToken = TOKENS[url.pathname];
+    const token = url.searchParams.get("token");
 
-    if (!file) {
-      return new Response("404 Not Found", {
-        status: 404,
+    if (expectedToken && token !== expectedToken) {
+      return new Response("403 Forbidden", {
+        status: 403,
         headers: {
           "Content-Type": "text/plain; charset=utf-8",
         },
       });
     }
 
-    if (token !== tokens[route]) {
-      return new Response("403 Forbidden", {
-        status: 403,
+    if (!file) {
+      return new Response("404 Not Found", {
+        status: 404,
         headers: {
           "Content-Type": "text/plain; charset=utf-8",
         },
@@ -58,6 +57,9 @@ export default {
       if (!res.ok) {
         return new Response("Subscription file not found.", {
           status: 404,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+          },
         });
       }
 
@@ -66,6 +68,9 @@ export default {
       if (!text) {
         return new Response("Subscription is empty.", {
           status: 404,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+          },
         });
       }
 
@@ -82,7 +87,6 @@ export default {
           "X-Content-Type-Options": "nosniff",
         },
       });
-
     } catch (err) {
       return new Response("Worker Error\n\n" + err.message, {
         status: 500,
