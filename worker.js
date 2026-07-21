@@ -1,5 +1,5 @@
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url = new URL(request.url);
 
     const routes = {
@@ -12,6 +12,27 @@ export default {
     };
 
     const file = routes[url.pathname];
+    
+    const TOKENS = {
+  "/": env.FREE_TOKEN,
+  "/free": env.FREE_TOKEN,
+  "/premium": env.PREMIUM_TOKEN,
+  "/sg": env.SG_TOKEN,
+  "/jp": env.JP_TOKEN,
+  "/us": env.US_TOKEN,
+};
+
+const expectedToken = TOKENS[url.pathname];
+const token = url.searchParams.get("token");
+
+if (expectedToken && token !== expectedToken) {
+  return new Response("403 Forbidden", {
+    status: 403,
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+    },
+  });
+}
 
     if (!file) {
       return new Response("404 Not Found", {
