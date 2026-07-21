@@ -16,31 +16,64 @@ export default {
     if (!file) {
       return new Response("404 Not Found", {
         status: 404,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+        },
       });
     }
 
     const githubRaw =
       `https://raw.githubusercontent.com/andrewzinkyaw/trenzych-sub/main/${file}`;
 
-    const res = await fetch(githubRaw);
+    try {
+      const res = await fetch(githubRaw, {
+        cf: {
+          cacheEverything: true,
+          cacheTtl: 300,
+        },
+      });
 
-    if (!res.ok) {
-      return new Response("Subscription file not found", {
-        status: 404,
+      if (!res.ok) {
+        return new Response("Subscription file not found.", {
+          status: 404,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+          },
+        });
+      }
+
+      const text = (await res.text()).trim();
+
+      if (!text) {
+        return new Response("Subscription is empty.", {
+          status: 404,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+          },
+        });
+      }
+
+      const encoded = btoa(unescape(encodeURIComponent(text)));
+
+      return new Response(encoded, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Profile-Title": "TRENZYCH VPN",
+          "Profile-Update-Interval": "6",
+          "Subscription-Userinfo": "upload=0; download=0; total=0; expire=0",
+          "Cache-Control": "public, max-age=300",
+          "Access-Control-Allow-Origin": "*",
+          "X-Content-Type-Options": "nosniff",
+        },
+      });
+
+    } catch (err) {
+      return new Response("Worker Error\n\n" + err.message, {
+        status: 500,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+        },
       });
     }
-
-    const text = await res.text();
-
-    const encoded = btoa(unescape(encodeURIComponent(text)));
-
-    return new Response(encoded, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Profile-Title": "TRENZYCH VPN",
-        "Subscription-Userinfo":
-          "upload=0; download=0; total=0; expire=0",
-      },
-    });
   },
 };
