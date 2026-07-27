@@ -1,4 +1,5 @@
 vless://94fcf184-6c40-42c1-bf92-b812df8bb6dc@www.trenzych.cc.cd:443?path=%2Ftrenzych&security=tls&encryption=none&insecure=0&host=trenzych.cc.cd&type=ws&allowInsecure=0&sni=trenzych.cc.cd#All%20Sim%20%26%20Wifi%20-%20Premium%20Server
+vless://b4759a2d-9c44-440f-8854-a75a7edc50e1@167.172.79.158:57461?security=none&encryption=none&headerType=none&type=tcp#All%20Sim%20%26%20Wifi%20-%20Premium%202
 vless://280696eb-3006-4304-b97f-713133b7cbfd@152.42.245.157:80?path=%2Ftrenzych&security=&encryption=none&host=portal-as.ruijienetworks.com&type=ws#Starlink%20Old%20Free%201
 vless://bfa191d0-2e73-49c8-8277-4ab7bceec0ab@139.59.111.162:80?path=%2Ftrenzych&security=&encryption=none&host=portal-as.ruijienetworks.com&type=ws#Starlink-Old-Free-2
 vless://15e399e2-55e7-4c96-878d-71084a0df2d0@45.131.208.230:443?path=%2FeyJqdW5rIjoiZ2ZsQW9RMzJsTjFQNGoiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6W119%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=free.channel-trenzych.loseyourip.com&type=ws&allowInsecure=0&sni=free.channel-trenzych.loseyourip.com#%F0%9F%8C%BFfree-1
