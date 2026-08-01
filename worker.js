@@ -9,6 +9,7 @@ export default {
       "/sg": "sg.txt",
       "/jp": "jp.txt",
       "/us": "us.txt",
+      "/ms": "ms.txt",
     };
 
     const file = routes[url.pathname];
@@ -20,6 +21,7 @@ export default {
       "/sg": env.SG_TOKEN,
       "/jp": env.JP_TOKEN,
       "/us": env.US_TOKEN,
+      "/ms": env.MS_TOKEN
     };
 
     const expectedToken = TOKENS[url.pathname];
